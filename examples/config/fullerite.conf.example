@@ -12,8 +12,7 @@
     "internalServer": {"port":"29090","path":"/metrics"},
     "collectorsConfigPath": "/etc/fullerite/conf.d",
     "diamondCollectorsPath": "src/diamond/collectors",
-    "diamondCollectors": [ "CPUCollector", "PingCollector" ]
-    },
+    "diamondCollectors": [ "CPUCollector", "PingCollector" ],
 
     "collectors": ["Test", "Diamond", "Fullerite", "DockerStats"],
 
