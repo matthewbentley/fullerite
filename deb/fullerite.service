@@ -3,7 +3,7 @@ Description=Fullerite
 
 [Service]
 TimeoutStartSec=5
-ExecStart=/usr/bin/fullerite --config /etc/fullerite.conf --log_file /var/log/fullerite/fullerite.log --log_level info
+ExecStart=/usr/bin/fullerite --config /etc/fullerite.conf --log_level info
 PIDFile=/var/run/fullerite.pid
 User=fuller
 
