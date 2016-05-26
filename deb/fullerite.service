@@ -1,12 +1,13 @@
 [Unit]
 Description=Fullerite
+After=network.target
 
 [Service]
 TimeoutStartSec=5
 ExecStart=/usr/bin/fullerite --config /etc/fullerite.conf --log_level info
 PIDFile=/var/run/fullerite.pid
 User=fuller
-
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
