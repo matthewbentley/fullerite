@@ -18,7 +18,6 @@ PKGS           := \
 SOURCES        := $(foreach pkg, $(PKGS), $(wildcard $(SRCDIR)/$(pkg)/*.go))
 SOURCES        := $(filter-out $(GEN_PROTO_SFX), $(SOURCES))
 OS	       := $(shell /usr/bin/lsb_release -si 2> /dev/null)
-RELEASE        := $(shell /usr/bin/lsb_release -sc 2> /dev/null)
 
 space :=
 space +=
@@ -114,22 +113,6 @@ package: clean $(FULLERITE) $(BEATIT)
 	@cp examples/config/fullerite.conf.example build/etc/
 	@cp -r src/diamond build/usr/share/fullerite/diamond
 ifeq ($(OS),Ubuntu)
-ifeq ($(RELEASE),xenial)
-	@fpm -s dir \
-		-t deb \
-		--name $(FULLERITE) \
-		--version $(VERSION) \
-		--description "metrics collector" \
-		--depends python \
-		--deb-user "fuller" \
-		--deb-group "fuller" \
-		--deb-default "deb/etc/fullerite" \
-		--deb-systemd "deb/fullerite.service" \
-		--before-install "deb/before_install.sh" \
-		--before-remove "deb/before_rm.sh" \
-		--after-remove "deb/post_rm.sh" \
-		-C build .
-else
 	@fpm -s dir \
 		-t deb \
 		--name $(FULLERITE) \
@@ -141,11 +124,12 @@ else
 		--deb-default "deb/etc/fullerite" \
 		--deb-upstart "deb/etc/init/fullerite" \
 		--deb-upstart "deb/etc/init/fullerite_diamond_server" \
+		--deb-systemd "deb/fullerite.service" \
 		--before-install "deb/before_install.sh" \
 		--before-remove "deb/before_rm.sh" \
 		--after-remove "deb/post_rm.sh" \
 		-C build .
-endif # RELEASE
+
 # CentOS 7 Only
 else ifeq ($(OS),CentOS)
 	@fpm -s dir \
